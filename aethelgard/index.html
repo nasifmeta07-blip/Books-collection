@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aethelgard Academic System — Parent Portal (Demo)</title>
+<meta name="description" content="Demo of the Aethelgard Academic System parent portal. All results, rankings and fees shown are sample data.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4l22 8v18c0 14-9 24-22 30C19 54 10 44 10 30V12z' fill='%2314233b'/%3E%3Cpath d='M32 18l-10 26h5l2-6h6l2 6h5zm0 9l2 7h-4z' fill='%23c9a557'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f3ea; --paper-2:#efe8d9; --card:#fffdf8;
+  --ink:#14233b; --ink-2:#44526a; --muted:#7c8597;
+  --line:#ded5c0; --gold:#b08a3c; --gold-2:#c9a557;
+  --wine:#7a1f2b; --green:#1f6b4d;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(1200px 500px at 50% -120px,#fff 0,transparent 70%)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0;letter-spacing:.005em}
+p{margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* Demo banner */
+.demo-bar{position:sticky;top:0;z-index:50;background:var(--wine);color:#fff;font-size:13px;line-height:1.4;
+  text-align:center;padding:8px 16px;letter-spacing:.01em}
+.demo-bar b{font-weight:600;text-transform:uppercase;letter-spacing:.09em;margin-right:6px}
+.demo-bar a{color:#fff;text-underline-offset:3px}
+
+/* Header */
+header.site{border-bottom:1px solid var(--line);background:rgba(247,243,234,.85);backdrop-filter:blur(8px)}
+.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.brand svg{width:40px;height:40px;flex:none}
+.brand-name{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1}
+.brand-sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+nav a{color:var(--ink-2);text-decoration:none;font-size:14px;margin-left:22px;transition:color .2s}
+nav a:hover{color:var(--wine)}
+
+/* Hero */
+.hero{padding:64px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.hero h1{font-size:clamp(38px,5.4vw,60px);margin:14px 0 18px}
+.hero h1 em{font-style:italic;color:var(--wine)}
+.hero p.lead{color:var(--ink-2);font-size:17px;max-width:46ch}
+.pillars{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
+.pillars li{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--ink-2);background:var(--card)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 1px 0 #fff inset,0 24px 50px -30px rgba(20,35,59,.35)}
+.portal{padding:30px 28px;position:relative;overflow:hidden}
+.portal::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--ink),var(--gold-2),var(--wine))}
+.portal h2{font-size:28px}
+.portal .hint{color:var(--muted);font-size:14px;margin:6px 0 22px}
+label{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+input{width:100%;font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:13px 14px;
+  transition:border-color .2s,box-shadow .2s;margin-bottom:16px}
+input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,138,60,.18)}
+.btn{width:100%;font:inherit;font-weight:600;color:#fff;background:var(--ink);border:0;border-radius:9px;padding:14px 18px;cursor:pointer;
+  transition:transform .2s var(--ease),box-shadow .2s,background .2s;display:flex;justify-content:center;align-items:center;gap:10px}
+.btn:hover{background:#1c3152;transform:translateY(-1px);box-shadow:0 12px 24px -14px rgba(20,35,59,.7)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+.btn svg{transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.err{color:var(--wine);font-size:14px;min-height:22px;margin-top:10px}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* Stage (process + results) */
+#stage{padding:10px 0 20px;scroll-margin-top:60px}
+.process{padding:30px 28px;display:none}
+.process.on{display:block;animation:rise .5s var(--ease) both}
+.process h2{font-size:26px;margin-bottom:4px}
+.proc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px;align-items:start}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:12px;align-items:center;padding:9px 0;color:var(--muted);font-size:15px;transition:color .3s}
+.steps li .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;transition:all .3s}
+.steps li.active{color:var(--ink)}
+.steps li.active .dot{border-color:var(--gold);border-top-color:transparent;animation:spin .8s linear infinite}
+.steps li.done{color:var(--ink-2)}
+.steps li.done .dot{background:var(--green);border-color:var(--green)}
+.steps li.done .dot::after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.reel{height:220px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;position:relative;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.reel::before,.reel::after{content:"";position:absolute;left:0;right:0;height:60px;z-index:2;pointer-events:none}
+.reel::before{top:0;background:linear-gradient(#fff,transparent)}
+.reel::after{bottom:0;background:linear-gradient(transparent,#fff)}
+.reel-head{position:absolute;top:6px;left:10px;background:#fff;padding:2px 6px;border-radius:4px;z-index:3;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-family:var(--sans)}
+.reel-band{position:absolute;left:8px;right:8px;top:50%;height:32px;margin-top:-16px;border:1px solid var(--gold-2);border-radius:6px;background:rgba(201,165,87,.1);z-index:1;transition:background .3s,box-shadow .3s}
+.reel.hit .reel-band{background:rgba(31,107,77,.12);border-color:var(--green);box-shadow:0 0 0 4px rgba(31,107,77,.12)}
+.reel-list{position:absolute;left:0;right:0;top:0;will-change:transform}
+.reel-row{height:32px;display:flex;justify-content:space-between;align-items:center;padding:0 20px;color:var(--ink-2);white-space:nowrap}
+.reel-row span:last-child{color:var(--muted)}
+.reel-row.me{color:var(--green);font-weight:700}
+.bar{height:6px;border-radius:99px;background:var(--paper-2);overflow:hidden;margin-top:22px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ink),var(--gold-2));border-radius:99px;transition:width .5s var(--ease)}
+.proc-note{font-size:13px;color:var(--muted);margin-top:10px;display:flex;justify-content:space-between}
+
+.results{display:none}
+.results.on{display:block}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.student{padding:26px 28px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center}
+.student h2{font-size:32px}
+.meta{color:var(--muted);font-size:14px;margin-top:4px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--green);background:rgba(31,107,77,.1);border-radius:999px;padding:6px 12px}
+.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+.sample{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--wine);border:1px solid currentColor;border-radius:4px;padding:1px 6px;vertical-align:middle;white-space:nowrap}
+
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.stat{padding:26px 22px;text-align:center}
+.stat .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v,.price,.ledger .a{font-variant-numeric:lining-nums tabular-nums}
+.stat .v{font-family:var(--serif);font-size:62px;font-weight:700;line-height:1;margin:12px 0 8px}
+.stat .v sup{font-size:.4em;font-weight:600;color:var(--gold);margin-left:2px}
+.stat .d{font-size:14px;color:var(--ink-2)}
+.stat.gold{background:linear-gradient(180deg,#fffaf0,#fffdf8);border-color:var(--gold-2)}
+
+.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:44px 0 16px}
+.section-title h2{font-size:30px}
+.section-title span{font-size:13px;color:var(--muted)}
+
+.perf{padding:24px 28px}
+.perf-row{display:grid;grid-template-columns:200px 1fr 54px;gap:16px;align-items:center;padding:10px 0}
+.perf-row .n{font-size:14px;color:var(--ink-2)}
+.perf-row .t{height:8px;background:var(--paper-2);border-radius:99px;overflow:hidden}
+.perf-row .t i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--ink),#3a5a8c);transition:width 1.3s var(--ease)}
+.perf-row .p{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+
+.fee{padding:0;overflow:hidden}
+.fee-top{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.fee-box{padding:28px}
+.fee-box + .fee-box{border-left:1px solid var(--line);background:linear-gradient(180deg,#f4faf6,#fffdf8)}
+.fee-box .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.price{font-family:var(--serif);font-weight:700;font-size:54px;line-height:1.1;margin-top:8px;font-variant-numeric:tabular-nums;display:inline-block;position:relative}
+.price small{font-family:var(--sans);font-size:15px;font-weight:500;color:var(--muted);margin-left:6px}
+.price.old::after{content:"";position:absolute;left:-4px;right:-4px;top:52%;height:3px;background:var(--wine);border-radius:2px;
+  transform:scaleX(0) rotate(-4deg);transform-origin:left;transition:transform .7s var(--ease)}
+.price.old.cut{color:var(--muted)}
+.price.old.cut::after{transform:scaleX(1) rotate(-4deg)}
+.price.new{color:var(--green)}
+.save{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:var(--green);background:rgba(31,107,77,.1);padding:4px 10px;border-radius:999px;opacity:0;transition:opacity .5s}
+.save.in{opacity:1}
+.ledger{list-style:none;margin:0;padding:8px 28px 20px}
+.ledger li{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:16px 0;border-bottom:1px dashed var(--line);
+  opacity:0;transform:translateX(-14px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.ledger li.in{opacity:1;transform:none}
+.ledger li:last-child{border-bottom:0}
+.ledger .t{font-weight:600}
+.ledger .w{grid-column:1;font-size:14px;color:var(--ink-2)}
+.ledger .a{grid-row:1/3;grid-column:2;align-self:center;font-family:var(--serif);font-size:26px;font-weight:700;color:var(--wine);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fee-foot{background:var(--paper-2);padding:16px 28px;font-size:14px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+.again{margin:26px auto 0;display:block;width:auto;background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.again:hover{background:var(--ink);color:#fff}
+
+/* Facts */
+#facts{padding:70px 0 30px;scroll-margin-top:50px}
+.facts{padding:32px 30px;border-left:4px solid var(--wine)}
+.facts h2{font-size:32px;margin-bottom:6px}
+.facts .big{font-size:18px;font-weight:500;margin:14px 0 18px;color:var(--ink)}
+.facts ul{margin:0;padding-left:20px;color:var(--ink-2)}
+.facts li{margin:8px 0}
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 40px;font-size:13px;color:var(--muted);text-align:center}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding-top:40px;gap:30px}
+  .proc-grid,.fee-top{grid-template-columns:1fr}
+  .fee-box + .fee-box{border-left:0;border-top:1px solid var(--line)}
+  .trio{grid-template-columns:1fr}
+  .perf-row{grid-template-columns:1fr 48px}
+  .perf-row .n{grid-column:1/3}
+  nav a:not(:last-child){display:none}
+  .stat .v{font-size:54px}
+  .price{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar" role="note"><b>Demo version</b>All results, rankings and fees on this site are sample data for beta testing — not real records. <a href="#facts">Read the facts</a></div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Aethelgard Academic System">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l22 8v18c0 14-9 24-22 30C19 54 10 44 10 30V12z" fill="#14233b"/><path d="M32 9l17 6.2V30c0 11.4-7 19.7-17 24.6C22 49.700 15 41.400 15 30V15.200z" fill="none" stroke="#c9a557" stroke-width="1.2"/><path d="M32 18l-10 26h5l2-6h6l2 6h5zm0 9l2 7h-4z" fill="#c9a557"/></svg>
+      <div><div class="brand-name">Aethelgard</div><div class="brand-sub">Academic System</div></div>
+    </a>
+    <nav><a href="#portal">Parent portal</a><a href="#facts">Facts</a></nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Parent Portal · Beta</div>
+      <h1>Clear results.<br><em>Fair</em> fees.</h1>
+      <p class="lead">Aethelgard links each student's monthly fee to how they actually perform. Enter a student ID to see the standing, the merit adjustments earned, and the fee for the month.</p>
+      <ul class="pillars"><li>Performance-based fees</li><li>Monthly statements</li><li>Transparent breakdown</li></ul>
+    </div>
+
+    <form class="card portal" id="portal" autocomplete="off" novalidate>
+      <h2>Student lookup</h2>
+      <p class="hint">Enter the details exactly as registered.</p>
+      <label for="sid">Student ID</label>
+      <input id="sid" name="sid" inputmode="numeric" placeholder="e.g. 5628700" maxlength="12" required>
+      <label for="sname">Student name</label>
+      <input id="sname" name="sname" placeholder="Full name" maxlength="60" required>
+      <button class="btn" id="go" type="submit">See my results &amp; fee
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <div class="err" id="err" role="alert"></div>
+    </form>
+  </section>
+
+  <section id="stage" aria-live="polite">
+    <div class="card process" id="process">
+      <h2>Retrieving record…</h2>
+      <p class="meta">Demo sequence — the registry below is a sample list of made-up names.</p>
+      <div class="proc-grid">
+        <ol class="steps" id="steps">
+          <li><span class="dot"></span>Connecting to the student registry</li>
+          <li><span class="dot"></span>Scanning the student library</li>
+          <li><span class="dot"></span>Matching name and ID</li>
+          <li><span class="dot"></span>Calculating performance score</li>
+          <li><span class="dot"></span>Applying merit adjustments to the fee</li>
+        </ol>
+        <div class="reel" id="reel">
+          <div class="reel-head">Sample registry</div>
+          <div class="reel-band"></div>
+          <div class="reel-list" id="reelList"></div>
+        </div>
+      </div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="proc-note"><span id="procMsg">Starting…</span><span id="procPct">0%</span></div>
+    </div>
+
+    <div class="results" id="results">
+      <div class="card student reveal">
+        <div>
+          <h2>Abu Hani Nasif</h2>
+          <div class="meta">Student ID 5628700 · Aethelgard Academic System · Current term</div>
+        </div>
+        <span class="tag">Record matched</span>
+      </div>
+
+      <div class="trio">
+        <div class="card stat reveal">
+          <div class="k">Overall score <span class="sample">Sample</span></div>
+          <div class="v"><span data-count="96.4" data-dec="1">0</span><sup>%</sup></div>
+          <div class="d">Weighted across all assessed areas</div>
+        </div>
+        <div class="card stat gold reveal">
+          <div class="k">School rank <span class="sample">Sample</span></div>
+          <div class="v"><span data-count="1">0</span><sup>st</sup></div>
+          <div class="d">First in school</div>
+        </div>
+        <div class="card stat reveal">
+          <div class="k">Course rank, worldwide <span class="sample">Sample</span></div>
+          <div class="v"><span data-count="3">0</span><sup>rd</sup></div>
+          <div class="d">Third among all students on the course</div>
+        </div>
+      </div>
+
+      <div class="section-title reveal"><h2>Performance profile</h2><span>Sample figures</span></div>
+      <div class="card perf reveal" id="perf">
+        <div class="perf-row"><div class="n">Assessments &amp; exams</div><div class="t"><i data-w="97"></i></div><div class="p">97%</div></div>
+        <div class="perf-row"><div class="n">Attendance &amp; punctuality</div><div class="t"><i data-w="98"></i></div><div class="p">98%</div></div>
+        <div class="perf-row"><div class="n">Assignments on time</div><div class="t"><i data-w="95"></i></div><div class="p">95%</div></div>
+        <div class="perf-row"><div class="n">Class participation</div><div class="t"><i data-w="94"></i></div><div class="p">94%</div></div>
+        <div class="perf-row"><div class="n">Independent projects</div><div class="t"><i data-w="96"></i></div><div class="p">96%</div></div>
+      </div>
+
+      <div class="section-title reveal"><h2>Monthly fee</h2><span>Sample statement · Omani rial</span></div>
+      <div class="card fee reveal" id="fee">
+        <div class="fee-top">
+          <div class="fee-box">
+            <div class="k">Standard fee</div>
+            <div class="price old" id="oldPrice">160.000<small>OMR / month</small></div>
+          </div>
+          <div class="fee-box">
+            <div class="k">Your fee after merit adjustments</div>
+            <div class="price new"><span id="newPrice">160.000</span><small>OMR / month</small></div>
+            <div><span class="save" id="save">You save 89.000 OMR every month (55.6%)</span></div>
+          </div>
+        </div>
+        <ul class="ledger" id="ledger">
+          <li data-amt="40"><span class="t">Academic Excellence Scholarship</span><span class="a">− 40.000</span><span class="w">Ranked 1st in school. The top-ranked student in each school receives a 25% reduction of the standard fee.</span></li>
+          <li data-amt="24"><span class="t">Global Merit Award</span><span class="a">− 24.000</span><span class="w">Ranked 3rd worldwide on the course. A top-three world placement earns a 15% reduction.</span></li>
+          <li data-amt="10"><span class="t">Attendance &amp; Punctuality Credit</span><span class="a">− 10.000</span><span class="w">98% attendance. Any student above 95% attendance receives this fixed credit.</span></li>
+          <li data-amt="9"><span class="t">Assignment Consistency Credit</span><span class="a">− 9.000</span><span class="w">95% of assignments submitted on time, above the 90% threshold for the credit.</span></li>
+          <li data-amt="6"><span class="t">Founding Cohort Benefit</span><span class="a">− 6.000</span><span class="w">Enrolled during the beta period. Founding students keep this benefit while enrolled.</span></li>
+        </ul>
+        <div class="fee-foot"><span>160.000 − 89.000 = <strong>71.000 OMR per month</strong></span><span>Adjustments are reviewed each term.</span></div>
+      </div>
+
+      <button class="btn again reveal" id="again" type="button">Look up another student</button>
+    </div>
+  </section>
+
+  <section id="facts">
+    <div class="card facts">
+      <div class="eyebrow">Facts</div>
+      <h2>What is real on this site, and what is not</h2>
+      <p class="big">These results are props and are only for beta / demo testing.</p>
+      <ul>
+        <li>The score, the "1st in school" rank and the "3rd worldwide" rank are made-up sample values. They do not come from any exam, school or ranking body.</li>
+        <li>The "student library" shown during the search is a list of invented names. No real student database is being searched, and the calculation animation is for show.</li>
+        <li>The discount lines and their rules are examples of how a performance-based fee could work. They have not been awarded by anyone.</li>
+        <li>Aethelgard Academic System is a concept at the idea stage. It is not a registered school or an accredited course.</li>
+        <li>This site does not take payments, and nothing shown here is a bill or a request for money.</li>
+        <li>The standard fee of 160 OMR per month and the adjusted fee of 71 OMR per month are the figures proposed for the concept.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Aethelgard Academic System · Parent portal demo · Sample data only</div></footer>
+
+<script>
+(function(){
+  var STUDENT = { id: "5628700", name: "abu hani nasif", display: "Abu Hani Nasif" };
+  var NAMES = ["Aaliyah Rahman","Adam Whitford","Aisha Al Balushi","Benedict Hale","Carmen Ortega","Daniel Okafor","Elena Petrova","Farid Al Harthy","Grace Lindqvist","Hamza Siddiqui","Imogen Clarke","Jonas Weber","Khalid Al Rawahi","Layla Haddad","Mateo Alvarez","Noor Al Hinai","Oliver Bennett","Priya Raman","Qasim Darwish","Rania Mansour","Samuel Adeyemi","Tariq Al Busaidi","Uma Krishnan","Victor Laurent","Wren Ashcombe","Yusuf Al Zadjali","Zara Hollis","Mei Tanaka","Lucas Moreau","Sofia Marchetti","Ibrahim Al Kindi","Hana Kobayashi","Edmund Fairley","Salma Al Lawati","Theo Vandermeer","Amara Nwosu"];
+  var ROW = 32, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $("portal"), err = $("err"), go = $("go"), proc = $("process"), results = $("results");
+  var steps = [].slice.call($("steps").children), reel = $("reel"), list = $("reelList");
+  var wait = function(ms){ return new Promise(function(r){ setTimeout(r, reduce ? Math.min(ms, 120) : ms); }); };
+  var norm = function(s){ return s.trim().toLowerCase().replace(/\s+/g, " "); };
+  var omr = function(n){ return n.toFixed(3); };
+  var fakeId = function(i){ return String(5600000 + ((i * 7919 + 1234) % 99999)); };
+
+  function tween(from, to, ms, fn){
+    return new Promise(function(res){
+      if (reduce) { fn(to); return res(); }
+      var t0 = performance.now();
+      (function tick(now){
+        var p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 4);
+        fn(from + (to - from) * e);
+        p < 1 ? requestAnimationFrame(tick) : res();
+      })(t0);
+    });
+  }
+  function setStep(i, pct, msg){
+    steps.forEach(function(li, k){ li.className = k < i ? "done" : k === i ? "active" : ""; });
+    $("barFill").style.width = pct + "%"; $("procPct").textContent = pct + "%"; $("procMsg").textContent = msg;
+  }
+  function buildReel(){
+    var rows = [], total = 70, target = total - 4;
+    for (var i = 0; i < total; i++) {
+      rows.push(i === target
+        ? '<div class="reel-row me"><span>' + STUDENT.display + '</span><span>' + STUDENT.id + '</span></div>'
+        : '<div class="reel-row"><span>' + NAMES[(i * 5 + 3) % NAMES.length] + '</span><span>' + fakeId(i) + '</span></div>');
+    }
+    list.innerHTML = rows.join("");
+    list.style.transform = "translateY(0)";
+    reel.classList.remove("hit");
+    return target * ROW - (reel.clientHeight / 2 - ROW / 2);
+  }
+
+  async function run(){
+    go.disabled = true;
+    results.classList.remove("on");
+    proc.classList.add("on");
+    var endY = buildReel();
+    proc.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+
+    setStep(0, 6, "Opening a secure session…");
+    await wait(900);
+    setStep(1, 22, "Reading " + (4812).toLocaleString() + " sample records…");
+    await tween(0, endY, 3200, function(y){ list.style.transform = "translateY(" + (-y) + "px)"; });
+    setStep(2, 48, "Comparing name and ID…");
+    await wait(700);
+    reel.classList.add("hit");
+    $("procMsg").textContent = "Match found: " + STUDENT.display;
+    await wait(900);
+    setStep(3, 70, "Weighing assessments, attendance and assignments…");
+    await wait(1300);
+    setStep(4, 90, "Working out merit adjustments…");
+    await wait(1200);
+    setStep(5, 100, "Done");
+    await wait(500);
+
+    proc.classList.remove("on");
+    showResults();
+    go.disabled = false;
+  }
+
+  async function showResults(){
+    // reset
+    [].forEach.call(results.querySelectorAll(".reveal"), function(el){ el.classList.remove("in"); });
+    [].forEach.call(results.querySelectorAll("[data-count]"), function(el){ el.textContent = "0"; });
+    [].forEach.call(results.querySelectorAll("[data-w]"), function(el){ el.style.width = "0"; });
+    [].forEach.call($("ledger").children, function(li){ li.classList.remove("in"); });
+    $("oldPrice").classList.remove("cut"); $("save").classList.remove("in"); $("newPrice").textContent = omr(160);
+
+    results.classList.add("on");
+    results.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    var blocks = [].slice.call(results.querySelectorAll(".reveal"));
+    for (var i = 0; i < blocks.length; i++) {
+      var el = blocks[i];
+      el.classList.add("in");
+      [].forEach.call(el.querySelectorAll("[data-count]"), function(c){
+        var dec = +c.dataset.dec || 0;
+        tween(0, +c.dataset.count, 1400, function(v){ c.textContent = v.toFixed(dec); });
+      });
+      if (el.id === "perf") [].forEach.call(el.querySelectorAll("[data-w]"), function(b, k){
+        setTimeout(function(){ b.style.width = b.dataset.w + "%"; }, k * 120);
+      });
+      if (el.id === "fee") { await wait(600); await feeSequence(); }
+      await wait(el.classList.contains("stat") ? 220 : 380);
+    }
+  }
+
+  async function feeSequence(){
+    $("fee").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    await wait(700);
+    $("oldPrice").classList.add("cut");
+    await wait(800);
+    var cur = 160, items = [].slice.call($("ledger").children);
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.add("in");
+      var next = cur - (+items[i].dataset.amt);
+      await tween(cur, next, 650, function(v){ $("newPrice").textContent = omr(v); });
+      cur = next;
+      await wait(250);
+    }
+    $("newPrice").textContent = omr(71);
+    $("save").classList.add("in");
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var id = $("sid").value.replace(/\s+/g, ""), name = norm($("sname").value);
+    var msg = "";
+    if (!id || !name) msg = "Please enter both the student ID and the student name.";
+    else if (id !== STUDENT.id || name !== STUDENT.name) msg = "No matching record in the demo registry. Check the ID and name and try again.";
+    if (msg) {
+      err.textContent = msg;
+      form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake");
+      return;
+    }
+    err.textContent = "";
+    run();
+  });
+  $("again").addEventListener("click", function(){
+    results.classList.remove("on");
+    form.reset();
+    form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    $("sid").focus({ preventScroll: true });
+  });
+})();
+</script>
+</body>
+</html>
